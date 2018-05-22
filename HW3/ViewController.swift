@@ -9,7 +9,7 @@
 import UIKit
 import CoreLocation
 
-class ViewController: UIViewController,SettingsViewControllerDelegate{
+class ViewController: UIViewController {
     
     
     @IBOutlet weak var p1Lat: DecimalMinusTextField!
@@ -18,6 +18,8 @@ class ViewController: UIViewController,SettingsViewControllerDelegate{
     @IBOutlet weak var p2Lng: DecimalMinusTextField!
     
    
+    @IBOutlet weak var dLabel: UILabel!
+    @IBOutlet weak var bLabel: UILabel!
     @IBOutlet weak var distanceLabel: UILabel!
     @IBOutlet weak var bearingLabel: UILabel!
     
@@ -27,12 +29,16 @@ class ViewController: UIViewController,SettingsViewControllerDelegate{
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from
+        dLabel.text = dunitselect
+        bLabel.text = bunitselect
     }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+    
+    
     func settingsChanged(distanceUnits: String, bearingUnits: String){
         dunitselect = distanceUnits
         bunitselect = bearingUnits
@@ -87,11 +93,10 @@ class ViewController: UIViewController,SettingsViewControllerDelegate{
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
        
-            if let dest = segue.destination as? SettingsViewController {
-               dest.dUnits = self.dunitselect
-                dest.bUnits = self.bunitselect
-                dest.delegate = self
-            }
+                guard let vc = segue.destination as? SettingsViewController else { return}
+                vc.dUnits = self.dunitselect
+                vc.bUnits = self.bunitselect
+        
         }
     
     }
